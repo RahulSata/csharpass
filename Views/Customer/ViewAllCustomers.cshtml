@@ -1,0 +1,139 @@
+﻿@model IEnumerable<CSharpAssignment.ViewModel.CustomerViewModel>
+
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <style>
+        thead input {
+            width: 100px;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
+
+
+    <script src="~/Scripts/scripts.js"></script>
+</head>
+
+<body>
+    <br><br>
+
+
+    <table id="mytable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("Name")
+                </th>
+
+
+                <th class="no-sort">
+                    @Html.DisplayName("City")
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.Country)
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.PostCode)
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.Mobile)
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.BirthDate)
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.Active)
+                </th>
+                <th class="no-sort"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CityName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PostCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mobile)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BirthDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Active)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Customer", new { id = item.CustomerId })" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="@Url.Action("Details", "Customer", new { id = item.CustomerId })" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </a>
+                        <a onclick="return ondelete(@item.CustomerId)" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+  
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#mytable thead tr:eq(1) th').each(function (i) {
+
+                var table = $('#mytable').DataTable({
+                    "scrollY": 400,
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                    "pagingType": "full_numbers",
+                    columnDefs: [{
+                        orderable: false,
+                        targets: "no-sort"
+                    }],
+                    "lengthMenu": [
+                        [5, 2, 10, 50, -1],
+                        [5, 2, 10, 50, "All"]
+                    ]
+                });
+                $('#checkBoxAll').click(function () {
+                    if ($(this).is(":checked")) {
+                        $(".chkCheckBoxId").prop("checked", true)
+                    }
+                    else {
+                        $(".chkCheckBoxId").prop("checked", false)
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+
+
+

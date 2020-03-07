@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CSharpAssignmentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CityName" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="50" />
+    <Property Name="Address1" Type="varchar" MaxLength="50" />
+    <Property Name="Address2" Type="varchar" MaxLength="50" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="PostCode" Type="varchar" MaxLength="12" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Mobile" Type="varchar" MaxLength="10" />
+    <Property Name="BirthDate" Type="date" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpadatedDate" Type="datetime" />
+  </EntityType>
+  <Association Name="FK__Customer__CityId__3A81B327">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CSharpAssignmentModelStoreContainer">
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Customer__CityId__3A81B327" Association="Self.FK__Customer__CityId__3A81B327">
+      <End Role="City" EntitySet="City" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

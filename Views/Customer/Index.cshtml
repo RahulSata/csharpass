@@ -1,0 +1,46 @@
+﻿
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<ul id="tab" class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#firsttab">View All</a></li>
+    <li><a data-toggle="tab" href="#secondtab">Add</a></li>
+</ul>
+<button id="btn1">Add</button>
+<div class="tab-content">
+    <div id="firsttab" class="tab-pane fade in active">@Html.Action("ViewAllCustomers")</div>
+    <div id="secondtab" class="tab-pane fade in">@Html.Action("Create")</div>
+</div>
+<script>
+    $("#btn1").click(function () {
+        var e = $('<li><a data-toggle="tab" href="#secondtab">Add</a></li>')
+        $("#tab").append(e);
+    });
+
+    function ondelete(id) {
+        $.ajax({
+            type: 'GET',
+            url: '/Customer/Delete/' + id,
+            success: function (response) {
+                console.log(response.CustomerName);
+                
+                $("#secondtab").html(response);
+                $('ul.nav.nav-tabs a:eq(1)').html('Delete');
+                $('ul.nav.nav-tabs a:eq(1)').tab('show');
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
+
+
