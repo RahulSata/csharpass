@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<button class="btn btn-primary md-2" onclick="location.href= '/Customer/Create'" style="margin:20px 0">Create</button>
+<ul id="tab" class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" id="ViewAll" href="#firsttab">View All</a></li>
+    <li><a data-toggle="tab" id="deleteid" style="display: none" href="#secondtab">Delete</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="firsttab" class="tab-pane fade in active">@Html.Action("ViewAllCustomers")</div>
+    <div id="secondtab" class="tab-pane fade in">@Html.Action("Delete", new { id = 0 })</div>
+</div>
+
+<script>
+    $("#ViewAll").click(function () {
+        $("#deleteid").css("display", "none");
+    });
+
+</script>

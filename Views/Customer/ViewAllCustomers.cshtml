@@ -1,0 +1,179 @@
+﻿@model IEnumerable<CSharpAssignment.ViewModel.CustomerViewModel>
+
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <style>
+
+        thead input {
+            width: 100px;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+
+        .dot-green {
+            height: 15px;
+            width: 15px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot-red {
+            height: 15px;
+            width: 15px;
+            background-color: red;
+            border-radius: 50%;
+            display: inline-block;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="~/Scripts/scripts.js"></script>
+</head>
+
+<body>
+    <br><br>
+
+
+    <table id="mytable" class="display" style="width:100%">
+        <thead>
+            <tr>
+
+                <th class="no-sort">@Html.DisplayName("Active?")</th>
+                <th>
+                    @Html.DisplayName("Name")
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayName("City")
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.Country)
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.PostCode)
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.Mobile)
+                </th>
+                <th class="no-sort">
+                    @Html.DisplayNameFor(model => model.BirthDate)
+                </th>
+                
+                <th class="no-sort"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                @if (item.Active == true)
+                {
+                    <td>
+                        <span class="dot-green" style="align-content:center"></span>
+                    </td>
+                }
+                else {
+                <td>
+                    <span class="dot-red"></span>
+                </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mobile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthDate)
+                </td>
+
+                <td>
+                    <a href="@Url.Action("Edit", "Customer", new { id = item.CustomerId })" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+
+                    <a onclick="Delete('@Url.Action("Delete", "Customer", new { id = item.CustomerId })')" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#mytable thead tr').clone(true).appendTo('#mytable thead');
+            $('#mytable thead tr:eq(1) th').each(function (i) {
+                var title = $(this).text();
+                title = $.trim(title);
+                if (title == 'Name' || title == 'City' || title == 'Country') {
+                    $(this).html('<input type="text" placeholder="Search" />');
+                }
+                else {
+                    $(this).html('<p></p>');
+                }
+                $('input', this).on('keyup change', function () {
+                    if (table.column(i).search() !== this.value) {
+                        table
+                            .column(i)
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+            var table = $('#mytable').DataTable({
+                "scrollY": 400,
+                orderCellsTop: true,
+                fixedHeader: true,
+                "pagingType": "full_numbers",
+                columnDefs: [{
+                    orderable: false,
+                    targets: "no-sort"
+                }],
+                "lengthMenu": [
+                    [5, 2, 10, 50, -1],
+                    [5, 2, 10, 50, "All"]
+                ]
+            });
+            $('#checkBoxAll').click(function () {
+                if ($(this).is(":checked")) {
+                    $(".chkCheckBoxId").prop("checked", true)
+                }
+                else {
+                    $(".chkCheckBoxId").prop("checked", false)
+                }
+            });
+        });
+    </script>
+
+</body>
+
+
+
